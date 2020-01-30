@@ -322,74 +322,22 @@ FOO = 1
 private_constant :FOO
 ```
 
-## 19) What are the differences between public, protected and private methods?
+## 19) What is the difference between
+
+```ruby
+render json: values.map { |value| value * 2 }
+```
+
+```ruby
+render json: values.map do |value|
+  value * 2
+end
+```
 
 ### Answer
 
-Public methods can be called by any other object.
-
-```ruby
-class Foo
-  def foo
-    11
-  end
-end
-
-class Bar
-  def bar
-    Foo.new.foo # => 11
-  end
-end
-```
-
-Protected methods can only be called if the caller is an instance (or instance of a sublass) of the receiver's class.
-
-```ruby
-class Foo
-  protected def foo
-    11
-  end
-end
-
-class Bar
-  def bar
-    Foo.new.foo # => NoMethodError
-  end
-end
-
-class Baz < Foo
-  def baz
-    Foo.new.foo # => 11
-  end
-end
-```
-
-Private methods can only be called with an implicit receiver. This means that they can only be called from within the class or its subclasses.
-
-```ruby
-class Foo
-  # Cannot be called from any other object
-  private def foo
-    11
-  end
-
-  def call_foo
-    foo # => 11
-  end
-
-  # The receiver has to be implicit
-  def call_foo_on_self
-    self.foo # => NoMethodError
-  end
-end
-
-def Bar < Foo
-  # This also works, unlike in most languages, since the receiver is implicit
-  def bar
-    foo # => 11
-  end
-end
-```
+In the first one, a json containing doubles of the values gets rendered. The block belongs to the map method as expected.
+In the second one, the block belongs to the render method, which ignores it and renders the enumerator returned from map that did not receive a block.
 
 ## 20) What is the problem with class variables (related to inheritance) and what can be used instead of them?
 
