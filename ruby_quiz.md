@@ -126,6 +126,16 @@ end
 
 ## 18) How to define a private constant?
 
-## 19) What are the differences between public, protected and private methods?
+## 19) What is the difference between
+
+```ruby
+render json: values.map { |value| value * 2 }
+```
+
+```ruby
+render json: values.map do |value|
+  value * 2
+end
+```
 
 ## 20) What is the problem with class variables (related to inheritance) and what can be used instead of them?
